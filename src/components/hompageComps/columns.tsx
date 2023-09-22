@@ -9,6 +9,7 @@ export type Coin = {
   name: {
     iconUrl: React.ComponentType;
     value: string;
+    uuid: string;
   };
   change: string;
   price: string;

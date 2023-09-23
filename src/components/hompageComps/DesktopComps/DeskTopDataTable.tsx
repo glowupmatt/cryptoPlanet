@@ -71,8 +71,6 @@ function DeskTopDataTable<TData, TValue>({
     });
   }, [offset, marketInfo, timePeriod]);
 
-  console.log(data);
-
   return (
     <div className="rounded-md border max-w-full w-screen p-8">
       <DesktopTableComp DesktopColumns={DesktopColumns} data={data} />

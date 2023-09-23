@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import {
   Card,
   CardContent,
@@ -8,19 +10,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import CryptoSelector from "./CryptoSelector";
-import { getCoinData } from "@/lib/helperFunctions/coinRainkingApi";
-import { MarketDataType } from "@/lib/types/marketDataTypes";
+import { conversionFunction } from "@/lib/helperFunctions/cryptoHelperFunctions";
 
 type Props = {};
 
-const CryptoConverter = async (props: Props) => {
-  // const coinData: MarketDataType[] | any = getCoinData(
-  //   "https://coinranking1.p.rapidapi.com/coins?referenceCurrencyUuid=yhjMzLPhuIDl&timePeriod=3h&tiers%5B0%5D=1&orderDirection=desc&limit=50&offset=0"
-  // )
-  // const {data:{coins}} = coinData
-  // .then((res) => {
-  //   setCoinData(res.data.coins);
-  // });
+const CryptoConverter = (props: Props) => {
+  const [selectedCoinPriceOne, setSelectedCoinPriceOne] = useState("");
+  const [selectedCoinPriceTwo, setSelectedCoinPriceTwo] = useState("");
+  const [inputAmount, setInputAmount] = useState("");
   return (
     <div>
       <div>
@@ -32,14 +29,31 @@ const CryptoConverter = async (props: Props) => {
               currencies with our intuitive and accurate crypto converter tool.
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="flex flex-col gap-4">
             <div className="border border-black rounded-md p-4 flex gap-4 w-full">
               <input
                 type="text"
                 placeholder="Input Amount"
+                onChange={(e) => setInputAmount(e.target.value)}
                 className="py-1 w-full dark:bg-gray-800 dark:text-gray-100 border border-gray-300 rounded-md px-2"
               />
-              <CryptoSelector />
+              <CryptoSelector
+                setSelectedCoinPrice={setSelectedCoinPriceOne}
+                selectedCoinPrice={selectedCoinPriceOne}
+              />
+            </div>
+            <div className="border border-black rounded-md p-4 flex gap-4 w-full">
+              <p className="py-1 w-full dark:bg-gray-800 dark:text-gray-100 border border-gray-300 rounded-md px-2 overflow-scroll">
+                {conversionFunction(
+                  +inputAmount,
+                  +selectedCoinPriceOne,
+                  +selectedCoinPriceTwo
+                )}
+              </p>
+              <CryptoSelector
+                setSelectedCoinPrice={setSelectedCoinPriceTwo}
+                selectedCoinPrice={selectedCoinPriceTwo}
+              />
             </div>
           </CardContent>
         </Card>

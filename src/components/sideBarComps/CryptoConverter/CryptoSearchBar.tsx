@@ -1,17 +1,20 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import React, { useState } from "react";
+import { getSearchCoinData } from "@/lib/helperFunctions/coinRainkingApi";
+import { SearchCoinType } from "@/lib/types/searchCoin";
 
 type Props = {
-  setSubmittedTerm: React.Dispatch<React.SetStateAction<string>>;
+  setSearchedCoinData: React.Dispatch<React.SetStateAction<SearchCoinType[]>>;
 };
 
 const CryptoSearchBar = (props: Props) => {
-  const { setSubmittedTerm } = props;
+  const { setSearchedCoinData } = props;
   const [searchTerm, setSearchTerm] = useState("");
-  const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmittedTerm(searchTerm);
+    const coinData = await getSearchCoinData(searchTerm);
+    setSearchedCoinData(coinData.data.coins);
   };
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {

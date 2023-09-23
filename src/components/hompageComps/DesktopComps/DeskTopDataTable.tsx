@@ -74,7 +74,7 @@ function DeskTopDataTable<TData, TValue>({
   console.log(data);
 
   return (
-    <div>
+    <div className="rounded-md border max-w-full w-screen p-8">
       <DesktopTableComp DesktopColumns={DesktopColumns} data={data} />
     </div>
   );

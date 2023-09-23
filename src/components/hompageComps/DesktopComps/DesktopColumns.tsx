@@ -5,6 +5,7 @@ import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import TrendingDownIcon from "@mui/icons-material/TrendingDown";
 import TableChart from "./TableChart";
 import { convertPriceToString } from "@/lib/helperFunctions/cryptoHelperFunctions";
+import classNames from "classnames";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -29,8 +30,8 @@ export const DesktopColumns: ColumnDef<Coin>[] = [
     header: () => <p className="w-full p-0">Ranking</p>,
     accessorKey: "ranking",
     cell: (ranking) => (
-      <span className="flex gap-2 w-[1rem]">
-        <p className="w-full p-0">{ranking.getValue<string>()}</p>
+      <span className="flex gap-2 w-full items-center">
+        <p className="w-full p-0 text-center">#{ranking.getValue<string>()}</p>
       </span>
     ),
   },
@@ -53,7 +54,17 @@ export const DesktopColumns: ColumnDef<Coin>[] = [
         ) : (
           <TrendingUpIcon sx={{ color: "green" }} />
         )}
-        <p className="flex gap-2 w-[6rem] md:w-full">
+        <p
+          className={classNames(
+            "flex gap-2 w-[6rem] md:w-full",
+            {
+              "text-red-400": change.getValue<string>().includes("-"),
+            },
+            {
+              "text-green-400": !change.getValue<string>().includes("-"),
+            }
+          )}
+        >
           {change.getValue<string>()}
         </p>
       </span>

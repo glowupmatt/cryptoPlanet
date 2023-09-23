@@ -63,15 +63,7 @@ const MobileTableComp = <TData, TValue>(
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
-                className={classNames(
-                  "",
-                  {
-                    "bg-red-800/50": change.includes("-"),
-                  },
-                  {
-                    "bg-green-800/50": !change.includes("-"),
-                  }
-                )}
+                className={classNames("")}
                 onClick={() => router.push(`/coin/${row.original?.uuid}`)}
               >
                 {row.getVisibleCells().map((cell: any) => {

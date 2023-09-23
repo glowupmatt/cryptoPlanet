@@ -64,13 +64,7 @@ const DesktopTableComp = <TData, TValue>(
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
                 className={classNames(
-                  "rounded-lg cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 transition-all duration-200 ease-in-out",
-                  {
-                    "bg-red-800/50": change.includes("-"),
-                  },
-                  {
-                    "bg-green-800/50": !change.includes("-"),
-                  }
+                  "rounded-lg cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 transition-all duration-200 ease-in-out"
                 )}
                 onClick={() => router.push(`/coin/${row.original?.uuid}`)}
               >

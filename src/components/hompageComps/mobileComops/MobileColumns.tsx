@@ -1,6 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
+import { green, red } from "@mui/material/colors";
+import TrendingUpIcon from "@mui/icons-material/TrendingUp";
+import TrendingDownIcon from "@mui/icons-material/TrendingDown";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -17,7 +20,7 @@ export type Coin = {
 
 const columnHelper = createColumnHelper<Coin>();
 
-export const columns: ColumnDef<Coin>[] = [
+export const MobileColumns: ColumnDef<Coin>[] = [
   {
     header: "Ranking",
     accessorKey: "ranking",
@@ -35,6 +38,18 @@ export const columns: ColumnDef<Coin>[] = [
   {
     accessorKey: "change",
     header: () => "24hr Change",
+    cell: (change) => (
+      <span className="flex gap-3">
+        {change.getValue<string>().includes("-") ? (
+          <TrendingDownIcon sx={{ color: "red" }} />
+        ) : (
+          <TrendingUpIcon sx={{ color: "green" }} />
+        )}
+        <p className="flex gap-2 w-[6rem] md:w-full">
+          {change.getValue<string>()}
+        </p>
+      </span>
+    ),
   },
   {
     accessorKey: "price",

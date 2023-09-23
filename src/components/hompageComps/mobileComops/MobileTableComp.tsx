@@ -15,28 +15,28 @@ import {
   useReactTable,
   getPaginationRowModel,
 } from "@tanstack/react-table";
-import Link from "next/link";
+import classNames from "classnames";
 import { useRouter } from "next/navigation";
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
+  MobileColumns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
 const MobileTableComp = <TData, TValue>(
   props: DataTableProps<TData, TValue>
 ) => {
-  const { data, columns } = props;
+  const { data, MobileColumns } = props;
   const router = useRouter();
 
   const table = useReactTable({
     data,
-    columns,
+    columns: MobileColumns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
   return (
-    <Table>
+    <Table className="backdrop-blur-sm">
       <TableHeader>
         {table.getHeaderGroups().map((headerGroup) => (
           <TableRow key={headerGroup.id}>
@@ -58,10 +58,20 @@ const MobileTableComp = <TData, TValue>(
       <TableBody>
         {table.getRowModel().rows?.length ? (
           table.getRowModel().rows.map((row: any) => {
+            const change = row.original.change;
             return (
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
+                className={classNames(
+                  "",
+                  {
+                    "bg-red-800/50": change.includes("-"),
+                  },
+                  {
+                    "bg-green-800/50": !change.includes("-"),
+                  }
+                )}
                 onClick={() => router.push(`/coin/${row.original?.uuid}`)}
               >
                 {row.getVisibleCells().map((cell: any) => {
@@ -79,7 +89,10 @@ const MobileTableComp = <TData, TValue>(
           })
         ) : (
           <TableRow>
-            <TableCell colSpan={columns.length} className="h-24 text-center">
+            <TableCell
+              colSpan={MobileColumns.length}
+              className="h-24 text-center"
+            >
               No results.
             </TableCell>
           </TableRow>

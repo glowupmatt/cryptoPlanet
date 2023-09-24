@@ -17,6 +17,7 @@ import {
 } from "@tanstack/react-table";
 import classNames from "classnames";
 import { useRouter } from "next/navigation";
+import LoadingState from "@/components/LoadingState";
 
 interface DataTableProps<TData, TValue> {
   DesktopColumns: ColumnDef<TData, TValue>[];
@@ -87,7 +88,7 @@ const DesktopTableComp = <TData, TValue>(
               colSpan={DesktopColumns.length}
               className="h-24 text-center"
             >
-              No results.
+              <LoadingState />
             </TableCell>
           </TableRow>
         )}

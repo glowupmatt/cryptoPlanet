@@ -22,7 +22,7 @@ const CoinList = (props: Props) => {
       ) : (
         <div className="h-[50vh] overflow-scroll flex flex-col gap-3">
           {coinData?.map((coin: any) => {
-            const { uuid, iconUrl, name, symbol, price } = coin;
+            const { uuid, iconUrl, name } = coin;
             return (
               <DialogClose key={uuid}>
                 <div

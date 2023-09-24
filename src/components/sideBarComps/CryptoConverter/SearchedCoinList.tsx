@@ -11,8 +11,6 @@ type Props = {
 
 const SearchedCoinList = (props: Props) => {
   const { searchedCoinData, setSelectedCoin } = props;
-
-  console.log(searchedCoinData);
   const onClickHandler = (coin: CoinsType) => {
     setSelectedCoin(coin);
   };
@@ -20,7 +18,6 @@ const SearchedCoinList = (props: Props) => {
   return (
     <div className="h-[50vh] overflow-scroll flex flex-col gap-3">
       {searchedCoinData.map((coin: any) => {
-        console.log(coin);
         return (
           <DialogClose key={coin.uuid}>
             <div

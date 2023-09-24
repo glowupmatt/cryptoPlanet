@@ -2,13 +2,19 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
-import { getCoinData } from "@/lib/helperFunctions/coinRainkingApi";
+import {
+  getCoinData,
+  getSearchCoinData,
+} from "@/lib/helperFunctions/coinRainkingApi";
 import { CoinsType } from "@/lib/types/marketDataTypes";
 import { convertPriceToString } from "@/lib/helperFunctions/cryptoHelperFunctions";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import MobileTableComp from "./MobileTableComp";
 import DropDownChartFilters from "../DropDownChartFilters";
+import { Input } from "@/components/ui/input";
+import SearchResultCard from "../SearchResultCard";
+import classNames from "classnames";
 
 interface DataTableProps<TData, TValue> {
   MobileColumns: ColumnDef<TData, TValue>[];
@@ -61,25 +67,54 @@ export function MobileDataTable<TData, TValue>({
     });
   }, [offset, marketInfo, timePeriod]);
 
+  //Search Handler
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchedCoinData, setSearchedCoinData] = useState<CoinsType[]>([]);
+  const onSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const coinData = await getSearchCoinData(searchTerm);
+    setSearchedCoinData(coinData.data.coins);
+  };
+  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
+
   return (
     <div className="rounded-md border max-w-full w-screen">
-      <DropDownChartFilters
-        setMarketInfo={setMarketInfo}
-        setTimePeriod={setTimePeriod}
-      />
-      <MobileTableComp MobileColumns={MobileColumns} data={data} />
-      <div className="flex items-center justify-between space-x-2 p-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={goBackHandler}
-          disabled={offset === 0}
-        >
-          Previous
-        </Button>
-        <Button variant="outline" size="sm" onClick={offSetHandler}>
-          Next
-        </Button>
+      <div className="w-full flex justify-center items-center gap-[1rem] p-2">
+        <form onSubmit={onSubmitHandler}>
+          <Input placeholder="Search" onChange={onChangeHandler} />
+        </form>
+        <DropDownChartFilters
+          setMarketInfo={setMarketInfo}
+          setTimePeriod={setTimePeriod}
+        />
+      </div>
+      {searchedCoinData.length > 0 ? (
+        <SearchResultCard
+          searchedCoinData={searchedCoinData}
+          setSearchedCoinData={setSearchedCoinData}
+        />
+      ) : (
+        ""
+      )}
+      <div
+        className={classNames("", { "blur-md": searchedCoinData.length > 0 })}
+      >
+        <MobileTableComp MobileColumns={MobileColumns} data={data} />
+        <div className="flex items-center justify-between space-x-2 p-4">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={goBackHandler}
+            disabled={offset === 0}
+          >
+            Previous
+          </Button>
+          <Button variant="outline" size="sm" onClick={offSetHandler}>
+            Next
+          </Button>
+        </div>
       </div>
     </div>
   );

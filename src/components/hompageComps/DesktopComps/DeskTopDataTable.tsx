@@ -2,12 +2,18 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
-import { getCoinData } from "@/lib/helperFunctions/coinRainkingApi";
+import {
+  getCoinData,
+  getSearchCoinData,
+} from "@/lib/helperFunctions/coinRainkingApi";
 import { convertPriceToString } from "@/lib/helperFunctions/cryptoHelperFunctions";
 import { CoinsType } from "@/lib/types/marketDataTypes";
 import Image from "next/image";
 import DesktopTableComp from "./DesktopTableComp";
 import DropDownChartFilters from "../DropDownChartFilters";
+import SearchResultCard from "../SearchResultCard";
+import { Input } from "@/components/ui/input";
+import classNames from "classnames";
 
 interface DataTableProps<TData, TValue> {
   DesktopColumns: ColumnDef<TData, TValue>[];
@@ -71,26 +77,56 @@ function DeskTopDataTable<TData, TValue>({
       );
     });
   }, [offset, marketInfo, timePeriod]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchedCoinData, setSearchedCoinData] = useState<CoinsType[]>([]);
+  const onSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const coinData = await getSearchCoinData(searchTerm);
+    setSearchedCoinData(coinData.data.coins);
+  };
+  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
 
   return (
     <div className="rounded-md border max-w-full w-screen p-8">
-      <DropDownChartFilters
-        setMarketInfo={setMarketInfo}
-        setTimePeriod={setTimePeriod}
-      />
-      <DesktopTableComp DesktopColumns={DesktopColumns} data={data} />
-      <div className="flex items-center justify-between space-x-2 p-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={goBackHandler}
-          disabled={offset === 0}
-        >
-          Previous
-        </Button>
-        <Button variant="outline" size="sm" onClick={offSetHandler}>
-          Next
-        </Button>
+      <div className="w-full flex justify-center items-center gap-[1rem] p-2">
+        <div className="w-full flex justify-center items-center gap-[1rem] p-2">
+          <form onSubmit={onSubmitHandler} className="w-full">
+            <Input placeholder="Search" onChange={onChangeHandler} />
+          </form>
+          <DropDownChartFilters
+            setMarketInfo={setMarketInfo}
+            setTimePeriod={setTimePeriod}
+          />
+        </div>
+      </div>
+      {searchedCoinData.length > 0 ? (
+        <SearchResultCard
+          searchedCoinData={searchedCoinData}
+          setSearchedCoinData={setSearchedCoinData}
+        />
+      ) : (
+        ""
+      )}
+      <div
+        className={classNames("", { "blur-md": searchedCoinData.length > 0 })}
+      >
+        <DesktopTableComp DesktopColumns={DesktopColumns} data={data} />
+
+        <div className="flex items-center justify-between space-x-2 p-4">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={goBackHandler}
+            disabled={offset === 0}
+          >
+            Previous
+          </Button>
+          <Button variant="outline" size="sm" onClick={offSetHandler}>
+            Next
+          </Button>
+        </div>
       </div>
     </div>
   );

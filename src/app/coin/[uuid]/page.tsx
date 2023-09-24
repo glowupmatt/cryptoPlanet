@@ -32,7 +32,7 @@ const CoinPage = (props: Props) => {
     <div className="h-full min-h-screen">
       <TokenInfo token={token} />
       <CoinInfoData token={token} />
-      <div className="p-4 rounded-md w-full lg:flex">
+      <div className="rounded-md w-full lg:flex">
         <div className="lg:h-screen w-full">
           <TimeFilters
             token={token}

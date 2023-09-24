@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState } from "react";
 import {
   Card,
@@ -9,55 +7,31 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import CryptoSelector from "./CryptoSelector";
-import { conversionFunction } from "@/lib/helperFunctions/cryptoHelperFunctions";
+import InputCryptoSelect from "./InputCryptoSelect";
+import { CoinsType } from "@/lib/types/marketDataTypes";
+import { getCoinData } from "@/lib/helperFunctions/coinRainkingApi";
 
 type Props = {};
 
-const CryptoConverter = (props: Props) => {
-  const [selectedCoinPriceOne, setSelectedCoinPriceOne] = useState("");
-  const [selectedCoinPriceTwo, setSelectedCoinPriceTwo] = useState("");
-  const [inputAmount, setInputAmount] = useState("");
+const CryptoConverter = async (props: Props) => {
+  const coins = await getCoinData(
+    "https://coinranking1.p.rapidapi.com/coins?referenceCurrencyUuid=yhjMzLPhuIDl&timePeriod=3h&tiers%5B0%5D=1&orderDirection=desc&limit=50&offset=0"
+  );
+  const coinData: CoinsType[] = await coins.data.coins;
   return (
     <div>
-      <div>
-        <Card>
-          <CardHeader className="text-center">
-            <CardTitle>Crypto Converter</CardTitle>
-            <CardDescription>
-              Easily convert between various cryptocurrencies and fiat
-              currencies with our intuitive and accurate crypto converter tool.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-4">
-            <div className="border border-black rounded-md p-4 flex gap-4 w-full">
-              <input
-                type="text"
-                placeholder="Input Amount"
-                onChange={(e) => setInputAmount(e.target.value)}
-                className="py-1 w-full dark:bg-gray-800 dark:text-gray-100 border border-gray-300 rounded-md px-2"
-              />
-              <CryptoSelector
-                setSelectedCoinPrice={setSelectedCoinPriceOne}
-                selectedCoinPrice={selectedCoinPriceOne}
-              />
-            </div>
-            <div className="border border-black rounded-md p-4 flex gap-4 w-full">
-              <p className="py-1 w-full dark:bg-gray-800 dark:text-gray-100 border border-gray-300 rounded-md px-2 overflow-scroll">
-                {conversionFunction(
-                  +inputAmount,
-                  +selectedCoinPriceOne,
-                  +selectedCoinPriceTwo
-                )}
-              </p>
-              <CryptoSelector
-                setSelectedCoinPrice={setSelectedCoinPriceTwo}
-                selectedCoinPrice={selectedCoinPriceTwo}
-              />
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      <Card className="flex flex-col justify-center items-center">
+        <CardHeader className="text-center">
+          <CardTitle>Crypto Converter</CardTitle>
+          <CardDescription>
+            Easily convert between various cryptocurrencies and fiat currencies
+            with our intuitive and accurate crypto converter tool.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-4 max-w-[22rem] lg:max-w-full relative">
+          <InputCryptoSelect coinData={coinData} />
+        </CardContent>
+      </Card>
     </div>
   );
 };

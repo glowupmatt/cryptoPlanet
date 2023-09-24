@@ -1,12 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { DesktopColumns } from "./DesktopColumns";
+import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { getCoinData } from "@/lib/helperFunctions/coinRainkingApi";
 import { convertPriceToString } from "@/lib/helperFunctions/cryptoHelperFunctions";
 import { CoinsType } from "@/lib/types/marketDataTypes";
 import Image from "next/image";
 import DesktopTableComp from "./DesktopTableComp";
+import DropDownChartFilters from "../DropDownChartFilters";
 
 interface DataTableProps<TData, TValue> {
   DesktopColumns: ColumnDef<TData, TValue>[];
@@ -73,7 +74,24 @@ function DeskTopDataTable<TData, TValue>({
 
   return (
     <div className="rounded-md border max-w-full w-screen p-8">
+      <DropDownChartFilters
+        setMarketInfo={setMarketInfo}
+        setTimePeriod={setTimePeriod}
+      />
       <DesktopTableComp DesktopColumns={DesktopColumns} data={data} />
+      <div className="flex items-center justify-between space-x-2 p-4">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={goBackHandler}
+          disabled={offset === 0}
+        >
+          Previous
+        </Button>
+        <Button variant="outline" size="sm" onClick={offSetHandler}>
+          Next
+        </Button>
+      </div>
     </div>
   );
 }

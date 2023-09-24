@@ -22,11 +22,11 @@ import SearchedCoinList from "./SearchedCoinList";
 type Props = {
   setSelectedCoinPrice: React.Dispatch<React.SetStateAction<string>>;
   selectedCoinPrice: string;
+  coinData: CoinsType[];
 };
 
 const CryptoSelector = (props: Props) => {
-  const { setSelectedCoinPrice, selectedCoinPrice } = props;
-  const [coinData, setCoinData] = useState<MarketDataType[]>([]);
+  const { setSelectedCoinPrice, selectedCoinPrice, coinData } = props;
   const [searchedCoinData, setSearchedCoinData] = useState<SearchCoinType[]>(
     []
   );
@@ -36,16 +36,9 @@ const CryptoSelector = (props: Props) => {
     setSelectedCoinPrice(selectedCoin.price);
   }, [selectedCoin, setSelectedCoinPrice]);
 
-  useEffect(() => {
-    getCoinData(
-      "https://coinranking1.p.rapidapi.com/coins?referenceCurrencyUuid=yhjMzLPhuIDl&timePeriod=3h&tiers%5B0%5D=1&orderDirection=desc&limit=50&offset=0"
-    ).then((res) => {
-      setCoinData(res.data.coins);
-    });
-  }, []);
   return (
     <Dialog>
-      <DialogTrigger className="w-[2rem]">
+      <DialogTrigger className="w-[50%]">
         {Object.keys(selectedCoin).length === 0 ? (
           <p>Open</p>
         ) : (

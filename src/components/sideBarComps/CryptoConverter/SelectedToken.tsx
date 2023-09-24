@@ -9,11 +9,12 @@ type Props = {
 
 const SelectedToken = (props: Props) => {
   const {
-    selectedCoin: { iconUrl, name },
+    selectedCoin: { iconUrl, name, symbol },
   } = props;
 
   return (
-    <div className="w-full">
+    <div className="w-full flex items-center justify-center gap-2">
+      <p className="text-center">{symbol}</p>
       <Image
         src={iconUrl}
         width={20}

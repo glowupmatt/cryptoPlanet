@@ -1,6 +1,5 @@
 "use client";
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
-import { green, red } from "@mui/material/colors";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import TrendingDownIcon from "@mui/icons-material/TrendingDown";
 import TableChart from "./TableChart";
@@ -22,8 +21,6 @@ export type Coin = {
   marketCap: string;
   ["24hVolume"]: string;
 };
-
-const columnHelper = createColumnHelper<Coin>();
 
 export const DesktopColumns: ColumnDef<Coin>[] = [
   {

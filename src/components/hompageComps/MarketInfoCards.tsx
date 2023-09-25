@@ -16,7 +16,7 @@ const MarketInfoCards = (props: Props) => {
         return (
           <Card
             key={index}
-            className="flex flex-col gap-[1rem] py-[.5rem] px-[1rem] w-full bg-slate-800/60 dark:bg-slate-800/90 lg:h-[10rem] lg:justify-center lg:items-center"
+            className="flex flex-col gap-[1rem] py-[.5rem] px-[1rem] w-full  dark:bg-slate-800/90 lg:h-[10rem] lg:justify-center lg:items-center"
           >
             <CardContent className="p-0 text-[0.84211rem] font-[500] opacity-[.8]">
               {info.title}

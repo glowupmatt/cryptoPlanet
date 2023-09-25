@@ -1,0 +1,12 @@
+.embla {
+  overflow: hidden;
+}
+.embla__container {
+  display: flex;
+  gap: 1rem;
+}
+.embla__slide {
+  flex: 0 0 100%;
+  min-width: 0;
+  overflow: hidden;
+}

@@ -17,7 +17,7 @@ const CoinInfoData = (props: Props) => {
     !props.token?.fullyDilutedMarketCap &&
     !props.token?.circulatingSupply
   ) {
-    return <div>Loading...</div>;
+    return <div></div>;
   } else {
     const {
       token: {

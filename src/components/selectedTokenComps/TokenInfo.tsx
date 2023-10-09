@@ -11,7 +11,7 @@ const TokenInfo = (props: Props) => {
   const { token } = props;
 
   if (!token?.iconUrl) {
-    return <div>Loading...</div>;
+    return <div></div>;
   } else {
     const { iconUrl, name, symbol, rank, price, change, description } = token;
     return (
@@ -20,7 +20,7 @@ const TokenInfo = (props: Props) => {
           <h2 className="text-[1rem] font-bold">Market Stats</h2>
           <div className="flex gap-4">
             {!iconUrl ? (
-              "Loading..."
+              ""
             ) : (
               <Image src={iconUrl} alt={name} width={50} height={50} />
             )}

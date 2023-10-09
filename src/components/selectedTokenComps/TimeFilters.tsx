@@ -1,6 +1,7 @@
 import { selectedTokenType } from "@/lib/types/selectedTokenType";
 import classNames from "classnames";
 import React from "react";
+import LoadingState from "../LoadingState";
 
 type Props = {
   token: selectedTokenType | any;
@@ -10,7 +11,11 @@ type Props = {
 
 const TimeFilters = (props: Props) => {
   if (!props.token?.symbol) {
-    return <div>Loading...</div>;
+    return (
+      <div className="h-screen w-screen flex justify-center items-center">
+        <LoadingState />
+      </div>
+    );
   } else {
     const { token, timePeriod, setTimePeriod } = props;
     const { symbol } = token;

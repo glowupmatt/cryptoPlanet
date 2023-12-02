@@ -30,7 +30,7 @@
     "embla-carousel-react": "^8.0.0-rc14",
     "eslint": "8.49.0",
     "eslint-config-next": "13.5.2",
-    "next": "13.5.2",
+    "next": "^14.0.4-canary.35",
     "next-themes": "^0.2.1",
     "postcss": "8.4.30",
     "react": "18.2.0",

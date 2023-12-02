@@ -52,13 +52,10 @@ const EmblaCarousel = (props: Props) => {
       <div className="embla__container lg:pr-[7rem] lg:pl-[27rem]">
         {filteredGraphPriceData.map((data, index) => {
           const { sparkline, name, iconUrl, change, price } = data;
-          const onClickHandler = () => {
-            router.push(`/market/${data.uuid}`);
-          };
+
           return (
             <Link
               href={`/coin/${data.uuid}`}
-              onClick={onClickHandler}
               key={index}
               className="embla__slide bg-white border-slate-200 dark:bg-slate-800 dark:border-slate-900 border-2 rounded-lg p-4 shadow-lg flex flex-col justify-center items-center gap-4 overflow-hidden"
             >

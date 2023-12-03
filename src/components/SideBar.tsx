@@ -13,7 +13,7 @@ const SideBar = async (props: Props) => {
   return (
     <div className="flex flex-col gap-4 justify-center items-center h-full lg:max-h-screen">
       <CryptoConverter />
-      <NewsCard articles={articles} />
+      {/* <NewsCard articles={articles} /> */}
     </div>
   );
 };

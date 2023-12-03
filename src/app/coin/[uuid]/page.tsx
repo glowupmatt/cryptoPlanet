@@ -33,7 +33,7 @@ const CoinPage = (props: Props) => {
       <TokenInfo token={token} />
       <CoinInfoData token={token} />
       <div className="rounded-md w-full lg:flex">
-        <div className="lg:h-screen w-full">
+        <div className="w-full">
           <TimeFilters
             token={token}
             timePeriod={timePeriod}

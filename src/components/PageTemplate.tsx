@@ -39,7 +39,7 @@ const PageTemplate = async (props: Props) => {
         <main className="lg:col-span-3 lg:row-span-2 max-w-full">
           {children}
         </main>
-        <aside className=" w-full lg:col-start-4 lg:row-span-2">
+        <aside className=" w-full self-start">
           <SideBar />
         </aside>
         <section className="lg:col-start-1 lg:row-span-6 lg:col-span-4">

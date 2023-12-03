@@ -16,13 +16,13 @@ type Props = {
 const NewsCard = (props: Props) => {
   const { articles } = props;
   return (
-    <div className="">
+    <div>
       <Card>
         <CardHeader>
           <CardTitle>Latest Crypto News</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-4 lg:max-h-[26rem] overflow-scroll md:grid md:grid-cols-2 lg:flex">
-          {articles.map((article: ArticleType, index: number) => {
+          {articles?.map((article: ArticleType, index: number) => {
             const { image } = article;
             return (
               <Link href={article.url} target="_blank" key={index}>
